@@ -26,6 +26,10 @@ class ResearchState(BaseModel):
     trace: list[dict[str, Any]] = Field(default_factory=list)
     errors: list[str] = Field(default_factory=list)
 
+    estimated_cost_usd: float = 0.0
+    input_tokens: int = 0
+    output_tokens: int = 0
+
     def record_route(self, route: str) -> None:
         self.route_history.append(route)
         self.iteration += 1

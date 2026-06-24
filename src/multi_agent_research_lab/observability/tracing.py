@@ -9,6 +9,17 @@ from contextlib import contextmanager
 from time import perf_counter
 from typing import Any
 
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+from langfuse.langchain import CallbackHandler
+
+def get_langfuse_handler():
+    load_dotenv()
+    if os.getenv("LANGFUSE_PUBLIC_KEY"):
+        return CallbackHandler()
+    return None
 
 @contextmanager
 def trace_span(name: str, attributes: dict[str, Any] | None = None) -> Iterator[dict[str, Any]]:
@@ -23,3 +34,4 @@ def trace_span(name: str, attributes: dict[str, Any] | None = None) -> Iterator[
         yield span
     finally:
         span["duration_seconds"] = perf_counter() - started
+

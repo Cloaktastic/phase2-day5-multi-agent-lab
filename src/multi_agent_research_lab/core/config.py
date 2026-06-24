@@ -28,6 +28,10 @@ class Settings(BaseSettings):
     max_iterations: int = Field(default=6, ge=1, le=20, validation_alias="MAX_ITERATIONS")
     timeout_seconds: int = Field(default=60, ge=5, le=600, validation_alias="TIMEOUT_SECONDS")
 
+    use_ollama: bool = Field(default=False, validation_alias="USE_OLLAMA")
+    ollama_base_url: str = Field(default="http://localhost:11434/v1", validation_alias="OLLAMA_BASE_URL")
+    ollama_model: str = Field(default="llama3.2:1b", validation_alias="OLLAMA_MODEL")
+
 
 @lru_cache(maxsize=1)
 def get_settings() -> Settings:
